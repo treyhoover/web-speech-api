@@ -1,0 +1,16 @@
+{
+  "extends": "google",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "no-unused-vars": "off",
+    "semi": "off",
+    "require-jsdoc": "off",
+    "no-debugger": "off",
+    "indent": "off",
+    "camelcase": "off",
+    "max-len": ["error", 120, 4, {"ignoreUrls": true}]
+  },
+  "plugins": ["react"]
+}
