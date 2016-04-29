@@ -2,62 +2,58 @@ import {
   SET_MESSAGE_VOICE,
   SET_MESSAGE_TEXT,
   SET_MESSAGE_RATE,
-  SET_MESSAGE_PITCH
+  SET_MESSAGE_PITCH,
+  CREATE_MESSAGE
 } from 'actions/messages';
+
+import {setArrayIndexValue} from 'reducers/helpers';
+
+const SET_VALUE = 'SET_VALUE';
 
 const _messages = [
   {id: 1, voiceId: 66, rate: 1, pitch: 1, author: `Megan`, text: `Would you mind terribly putting the kettle on, I'm quite parched.`},
   {id: 2, voiceId: 16, rate: 1, pitch: 1, author: `Trey`, text: `Oh dear, I'm afraid I simply can't be bothered.`}
 ];
 
+function message (state, action) {
+  switch (action.type) {
+    case SET_VALUE:
+      return {
+        ...state,
+        [action.key]: action.value
+      };
+    default:
+      return state;
+  }
+}
+
 export default function messages(state = _messages, action) {
-  let messageIndex, msg;
+  let messageIndex, value;
+
+  function updateMessageValue(messages, key, action) {
+    messageIndex = messages.findIndex(message => message.id === action.messageId);
+    value = message(messages[messageIndex], {type: SET_VALUE, key: key, value: action[key]});
+
+    return setArrayIndexValue(state, messageIndex, value);
+  }
 
   switch (action.type) {
     case SET_MESSAGE_VOICE:
-      messageIndex = state.findIndex(message => message.id === action.messageId);
-      msg = {
-        ...state[messageIndex],
-        voiceId: action.voiceId
-      };
-
-      return state
-        .slice(0, messageIndex)
-        .concat(msg)
-        .concat(state.slice(messageIndex + 1));
+      return updateMessageValue(state, 'voiceId', action);
     case SET_MESSAGE_TEXT:
-      messageIndex = state.findIndex(message => message.id === action.messageId);
-      msg = {
-        ...state[messageIndex],
-        text: action.text
-      };
-
-      return state
-        .slice(0, messageIndex)
-        .concat(msg)
-        .concat(state.slice(messageIndex + 1));
+      return updateMessageValue(state, 'text', action);
     case SET_MESSAGE_RATE:
-      messageIndex = state.findIndex(message => message.id === action.messageId);
-      msg = {
-        ...state[messageIndex],
-        rate: action.rate
-      };
-
-      return state
-        .slice(0, messageIndex)
-        .concat(msg)
-        .concat(state.slice(messageIndex + 1));
+      return updateMessageValue(state, 'rate', action);
     case SET_MESSAGE_PITCH:
-      messageIndex = state.findIndex(message => message.id === action.messageId);
-      msg = {
-        ...state[messageIndex],
-        pitch: action.pitch
-      };
-
-      return state
-        .slice(0, messageIndex)
-        .concat(msg)
-        .concat(state.slice(messageIndex + 1));
+    case CREATE_MESSAGE:
+      return state.concat({
+        id: action.id,
+        voiceId: 0,
+        rate: 1,
+        pitch: 1,
+        author: 'Anonymous',
+        text: ''
+      });
     default:
       return state;
   }

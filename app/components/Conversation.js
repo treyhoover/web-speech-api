@@ -61,7 +61,7 @@ class Conversation extends Component {
                             showExpandableButton={true}
                 />
                 <CardText expandable={false} style={{paddingTop: '0'}}>
-                  <textarea style={textStyle} value={text} onChange={::this._onTextChange(id)}/>
+                  <textarea style={textStyle} value={text} placeholder="Say something" onChange={::this._onTextChange(id)}/>
                 </CardText>
                 <CardText expandable={true} style={{borderTop: '1px solid #eee'}}>
                   <SpokenTextControls voices={voices} id={id} settingsDisabled={playback.isPlaying}
