@@ -1,15 +1,21 @@
 import {
-  TOGGLE_PLAYING
+  START_PLAYBACK,
+  STOP_PLAYBACK,
 } from 'actions/playback';
 
 export default function playback(state = {
   isPlaying: false
 }, action) {
   switch (action.type) {
-    case TOGGLE_PLAYING:
+    case START_PLAYBACK:
       return Object.assign({}, state, {
         ...state,
-        isPlaying: action.isPlaying
+        isPlaying: true
+      });
+    case STOP_PLAYBACK:
+      return Object.assign({}, state, {
+        ...state,
+        isPlaying: false
       });
     default:
       return state;

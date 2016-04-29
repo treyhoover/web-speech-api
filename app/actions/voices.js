@@ -10,6 +10,7 @@ function _receiveVoices() {
     });
   };
 }
+
 export function populateVoices() {
   return (dispatch) => {
     if (speechSynthesis.onvoiceschanged !== undefined) {

@@ -3,9 +3,8 @@ import {
 } from 'actions/messages';
 
 const _messages = [
-  {id: 1, voiceId: 1, rate: 1, pitch: 1, author: `Trey`, text: `This is pretty awesome!`},
-  {id: 2, voiceId: 1, rate: 1, pitch: 1, author: `Megan`, text: `I know, right?`},
-  {id: 3, voiceId: 1, rate: 1, pitch: 1, author: `Trey`, text: `Aw yeahh.`}
+  {id: 1, voiceId: 66, rate: 1, pitch: 1, author: `Megan`, text: `Would you mind terribly putting the kettle on, I'm quite parched.`},
+  {id: 2, voiceId: 16, rate: 1, pitch: 1, author: `Trey`, text: `Oh dear, I'm afraid I simply can't be bothered.`}
 ];
 
 export default function messages(state = _messages, action) {

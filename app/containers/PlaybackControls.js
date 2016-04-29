@@ -1,31 +1,46 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
 import RaisedButton from 'material-ui/lib/raised-button';
-import {togglePlaying} from 'actions/playback';
+import * as actions from 'actions/playback'
 
 class PlaybackControls extends Component {
   constructor(props) {
     super(props);
   }
 
-  stopPlayback() {
-    console.log('stopping playback');
+  _stopPlayback() {
+    console.log('stopping...');
+    const {isPlaying} = this.props;
+    if (isPlaying) actions.stopPlayback();
   }
 
-  startPlayback() {
-    const {messages} = this.props;
-    console.log('starting playback', messages);
+  _startPlayback() {
+    console.log('starting...');
+    const {messages, voices} = this.props;
+    actions.startPlayback();
+
+    for (let i in messages) {
+      const message = messages[i];
+      const isLastMessage = i == (messages.length - 1);
+
+      const onend = isLastMessage ? ::this._stopPlayback : function () {};
+
+      const utterance = new SpeechSynthesisUtterance(message.text);
+      Object.assign(utterance, {
+        voice: voices[message.voiceId],
+        pitch: message.pitch,
+        rate: message.rate,
+        onend: onend
+      });
+
+      window.speechSynthesis.speak(utterance);
+    }
   }
 
   togglePlaying() {
-    const {dispatch, isPlaying} = this.props;
-    if (isPlaying) {
-      this.stopPlayback();
-    } else {
-      this.startPlayback();
-    }
-
-    dispatch(togglePlaying());
+    const {isPlaying} = this.props;
+    return isPlaying ? ::this._stopPlayback() : ::this._startPlayback();
   }
 
   render() {
@@ -39,12 +54,22 @@ class PlaybackControls extends Component {
 }
 
 function mapStateToProps(state) {
-  const {playback, messages} = state;
+  const {playback, messages, voices} = state;
   const {isPlaying} = playback;
   return {
     isPlaying,
-    messages
+    messages,
+    voices
   }
 }
 
-export default connect(mapStateToProps)(PlaybackControls)
+function mapDispatchToProps (dispatch) {
+  const {startPlayback, stopPlayback} = actions;
+
+  return bindActionCreators ({
+    startPlayback,
+    stopPlayback
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaybackControls)

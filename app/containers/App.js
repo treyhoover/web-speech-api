@@ -4,10 +4,16 @@ import {connect} from 'react-redux'
 import Navbar from 'components/Navbar';
 import PlaybackControls from 'containers/PlaybackControls';
 import Conversation from 'containers/Conversation';
+import {populateVoices} from 'actions/voices';
 
 class App extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch(populateVoices());
   }
 
   render() {

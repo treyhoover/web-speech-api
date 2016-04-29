@@ -4,17 +4,22 @@ import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Slider from 'material-ui/lib/slider';
 
-import {populateVoices} from 'actions/voices';
 import {setMessageVoice} from 'actions/messages';
 
 import styles from './../app.css';
 
-class SpokenTextControls extends Component {
-  componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(populateVoices());
-  }
+const menuStyles = {
+  whiteSpace: 'no-wrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  marginBottom: '15px'
+};
 
+const sliderStyles = {
+  margin: '15px 0'
+};
+
+class SpokenTextControls extends Component {
   changeVoice(e, idx, voiceId) {
     const {id, dispatch} = this.props;
     dispatch(setMessageVoice(id, voiceId));
@@ -34,11 +39,16 @@ class SpokenTextControls extends Component {
     const {id, rate, pitch, voices = [], voiceId = 1} = this.props;
 
     return (
-      <div className="spoken-text">
+      <div>
         <label htmlFor="voice">Voice</label>
         <div>
-          <SelectField name="voice" value={voiceId} disabled={false} onChange={::this.changeVoice}>
-            {voices.length ? voices.map((v, idx) => <MenuItem key={idx} value={idx} primaryText={v.name}/>) : null}
+          <SelectField name="voice" value={voiceId} disabled={false} style={menuStyles}
+                       onChange={::this.changeVoice}>
+            {
+              voices.length ? voices.map((v, idx) => {
+                return <MenuItem key={idx} value={idx} primaryText={`${v.name} (${v.lang})`}/>
+              }) : null
+            }
           </SelectField>
         </div>
 
@@ -46,6 +56,7 @@ class SpokenTextControls extends Component {
           <label htmlFor="rate">Rate</label>
           <Slider
             className="rate-slider"
+            style={sliderStyles}
             name='rate'
             min={0.5}
             max={2}
@@ -58,6 +69,7 @@ class SpokenTextControls extends Component {
           <label htmlFor="pitch">Pitch</label>
           <Slider
             className="pitch-slider"
+            style={sliderStyles}
             name="pitch"
             min={0}
             max={2}

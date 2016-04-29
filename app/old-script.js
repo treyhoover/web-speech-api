@@ -45,7 +45,7 @@ inputForm.onsubmit = function(event) {
   }
   utterThis.pitch = pitch.value;
   utterThis.rate = rate.value;
-  synth.speak(utterThis);
+  window.speechSynthesis.speak(utterThis);
 
   utterThis.onpause = function(event) {
     var char = event.utterance.text.charAt(event.charIndex);

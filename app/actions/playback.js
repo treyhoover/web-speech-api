@@ -1,12 +1,16 @@
-export const TOGGLE_PLAYING  = 'TOGGLE_PLAYING';
+export const START_PLAYBACK  = 'START_PLAYBACK';
+export const STOP_PLAYBACK  = 'STOP_PLAYBACK';
 
-export function togglePlaying() {
-  return (dispatch, getState) => {
-    const {playback} = getState();
-    const {isPlaying} = playback;
-    dispatch({
-      type: TOGGLE_PLAYING,
-      isPlaying: !isPlaying
-    });
+export function startPlayback() {
+  console.log('creating start action');
+  return dispatch => {
+    dispatch({type: START_PLAYBACK});
+  }
+}
+
+export function stopPlayback() {
+  console.log('creating start action');
+  return dispatch => {
+    dispatch({type: STOP_PLAYBACK});
   }
 }
