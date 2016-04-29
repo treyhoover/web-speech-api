@@ -7,12 +7,16 @@ import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
 
 import SpokenTextControls from 'containers/SpokenTextControls';
+import Theme from 'config/theme';
 import styles from './../app.css';
 
 const textStyle = {
   width: '100%',
   border: 'none',
-  resize: 'none'
+  resize: 'none',
+  color: Theme.palette.textColor,
+  height: '40px',
+  fontSize: '1em'
 };
 
 class Conversation extends Component {
@@ -20,12 +24,15 @@ class Conversation extends Component {
     super(props);
   }
 
-  handleTextChange(e) {
-    console.log('text changed', e.target.value);
+  _onTextChange(id) {
+    return e => {
+      const {onTextChange} = this.props;
+      onTextChange(id, e.target.value);
+    }
   }
 
   render() {
-    const {messages = []} = this.props;
+    const {messages = [], onTextChange} = this.props;
     return (
       <ol className="conversation">
         {messages.map(message => {
@@ -35,12 +42,11 @@ class Conversation extends Component {
               <Card style={{marginBottom: '15px'}}>
                 <CardHeader style={{height: 'auto'}}
                   title={author}
-                  titleStyle={{width: '100%'}}
                   actAsExpander={true}
                   showExpandableButton={true}
                 />
-                <CardText expandable={false} style={{paddingTop: '0', paddingBottom: '0'}}>
-                  <textarea style={textStyle} value={text} onChange={::this.handleTextChange}/>
+                <CardText expandable={false} style={{paddingTop: '0'}}>
+                  <textarea style={textStyle} value={text} onChange={::this._onTextChange(id)}/>
                 </CardText>
                 <CardText expandable={true} style={{borderTop: '1px solid #eee'}} >
                   <SpokenTextControls id={id} voiceId={voiceId} rate={rate} pitch={pitch}/>

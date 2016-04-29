@@ -1,5 +1,6 @@
 import {
-  SET_MESSAGE_VOICE
+  SET_MESSAGE_VOICE,
+  SET_MESSAGE_TEXT
 } from 'actions/messages';
 
 const _messages = [
@@ -8,20 +9,31 @@ const _messages = [
 ];
 
 export default function messages(state = _messages, action) {
+  let messageIndex, msg;
+
   switch (action.type) {
     case SET_MESSAGE_VOICE:
-      const {messageId, voiceId} = action;
-      const messageIndex = state.findIndex(message => message.id === messageId);
-      const msg = {
+      messageIndex = state.findIndex(message => message.id === action.messageId);
+      msg = {
         ..._messages[messageIndex],
-        voiceId
+        voiceId: action.voiceId
       };
 
       return state
         .slice(0, messageIndex)
         .concat(msg)
         .concat(state.slice(messageIndex + 1));
+    case SET_MESSAGE_TEXT:
+      messageIndex = state.findIndex(message => message.id === action.messageId);
+      msg = {
+        ..._messages[messageIndex],
+        text: action.text
+      };
 
+      return state
+        .slice(0, messageIndex)
+        .concat(msg)
+        .concat(state.slice(messageIndex + 1));
     default:
       return state;
   }

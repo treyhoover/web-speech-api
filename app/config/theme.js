@@ -8,17 +8,17 @@ export default {
   zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: Colors.deepOrange500,
-    primary2Color: Colors.deepOrange700,
+    primary1Color: Colors.red500,
+    primary2Color: Colors.red700,
     primary3Color: Colors.lightBlack,
     accent1Color: Colors.pinkA200,
     accent2Color: Colors.grey100,
     accent3Color: Colors.grey500,
-    textColor: Colors.darkBlack,
+    textColor: Colors.grey900,
     alternateTextColor: Colors.white,
     canvasColor: Colors.white,
     borderColor: Colors.grey300,
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
-    pickerHeaderColor: Colors.deepOrange500
+    pickerHeaderColor: Colors.red500
   }
 };

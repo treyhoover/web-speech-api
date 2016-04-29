@@ -17,3 +17,5 @@ html {
 .app-container {
     padding-top: 25px;
 }
+
+:focus {outline: none;}

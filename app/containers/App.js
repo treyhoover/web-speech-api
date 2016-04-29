@@ -6,6 +6,7 @@ import Navbar from 'components/Navbar';
 import PlaybackControls from 'components/PlaybackControls';
 import Conversation from 'components/Conversation';
 import {receiveVoices} from 'actions/voices';
+import {setMessageText} from 'actions/messages';
 import {startPlayback, stopPlayback, setCurrentlyPlaying} from 'actions/playback';
 
 class App extends Component {
@@ -23,14 +24,17 @@ class App extends Component {
     }
   }
 
-  play(message, callback) {
-    const {voices} = this.props;
+  play(message, index, callback) {
+    const {dispatch, voices} = this.props;
     const utterance = new SpeechSynthesisUtterance(message.text);
+
+    dispatch(setCurrentlyPlaying(message));
+
     Object.assign(utterance, {
       voice: voices[message.voiceId],
       pitch: message.pitch,
       rate: message.rate,
-      onend: callback
+      onend: () => callback(message, index)
     });
 
     window.speechSynthesis.speak(utterance);
@@ -39,21 +43,28 @@ class App extends Component {
   onPlay() {
     const {dispatch, messages} = this.props;
     dispatch(startPlayback());
-    dispatch(setCurrentlyPlaying(messages[0]));
 
-    for (let i in messages) {
-      const isLastMessage = i == (messages.length - 1);
+    this.play(messages[0], 0, (function next(lastMessage, lastIndex) {
+      const nextIndex = lastIndex + 1;
+      const nextMessage = messages[nextIndex];
 
-      this.play(messages[i], function (e) {
-        if (isLastMessage) dispatch(stopPlayback());
-      });
-    }
+      if (nextMessage) {
+        this.play(nextMessage, nextIndex, next);
+      } else {
+        dispatch(stopPlayback());
+      }
+    }).bind(this));
   }
 
   onStop() {
     const {dispatch} = this.props;
     dispatch(stopPlayback());
     dispatch(setCurrentlyPlaying(null));
+  }
+
+  onTextChange(id, text) {
+    const {dispatch} = this.props;
+    dispatch(setMessageText(id, text));
   }
 
   render() {
@@ -67,7 +78,9 @@ class App extends Component {
                             onPlay={::this.onPlay}
                             onStop={::this.onStop}
           />
-          <Conversation messages={messages} />
+          <Conversation messages={messages}
+                        onTextChange={::this.onTextChange}
+          />
         </div>
       </div>
     );
