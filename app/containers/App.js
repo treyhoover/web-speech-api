@@ -6,7 +6,10 @@ import Navbar from 'components/Navbar';
 import PlaybackControls from 'components/PlaybackControls';
 import Conversation from 'components/Conversation';
 import {receiveVoices} from 'actions/voices';
-import {setMessageText, setMessagePitch, setMessageRate, setMessageVoice, createMessage} from 'actions/messages';
+import {
+  setMessageText, setMessagePitch, setMessageRate,
+  setMessageVoice, createMessage, deleteMessage
+} from 'actions/messages';
 import {startPlayback, stopPlayback, setCurrentlyPlaying} from 'actions/playback';
 
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
@@ -89,6 +92,11 @@ class App extends Component {
     dispatch(setMessagePitch(id, pitch));
   }
 
+  onDelete(id) {
+    const {dispatch} = this.props;
+    dispatch(deleteMessage({id}));
+  }
+
   createMessage() {
     const {dispatch, messages} = this.props;
     dispatch(createMessage({id: messages.length + 1}));
@@ -112,9 +120,11 @@ class App extends Component {
                         onVoiceChange={::this.onVoiceChange}
                         onPitchChange={::this.onPitchChange}
                         onRateChange={::this.onRateChange}
+                        onDelete={::this.onDelete}
           />
 
-          <FloatingActionButton style={{position: 'fixed', right: '15px', bottom: '15px'}} secondary={true} onClick={::this.createMessage}>
+          <FloatingActionButton style={{position: 'fixed', right: '15px', bottom: '15px'}} secondary={true}
+                                onClick={::this.createMessage}>
             <ContentAdd />
           </FloatingActionButton>
         </div>

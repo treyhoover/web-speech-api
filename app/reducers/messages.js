@@ -3,10 +3,11 @@ import {
   SET_MESSAGE_TEXT,
   SET_MESSAGE_RATE,
   SET_MESSAGE_PITCH,
-  CREATE_MESSAGE
+  CREATE_MESSAGE,
+  DELETE_MESSAGE
 } from 'actions/messages';
 
-import {setArrayIndexValue} from 'reducers/helpers';
+import {setArrayIndexValue, removeArrayIndexValue} from 'reducers/helpers';
 
 const SET_VALUE = 'SET_VALUE';
 
@@ -54,6 +55,9 @@ export default function messages(state = _messages, action) {
         author: 'Anonymous',
         text: ''
       });
+    case DELETE_MESSAGE:
+      messageIndex = state.findIndex(message => message.id === action.id);
+      return removeArrayIndexValue(state, messageIndex);
     default:
       return state;
   }

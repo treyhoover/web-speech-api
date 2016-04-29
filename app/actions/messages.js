@@ -3,6 +3,7 @@ export const SET_MESSAGE_TEXT = 'SET_MESSAGE_TEXT';
 export const SET_MESSAGE_PITCH = 'SET_MESSAGE_PITCH';
 export const SET_MESSAGE_RATE = 'SET_MESSAGE_RATE';
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 
 export function setMessageVoice(messageId, voiceId) {
   return {
@@ -39,6 +40,13 @@ export function setMessageRate(messageId, rate) {
 export function createMessage({id}) {
   return {
     type: CREATE_MESSAGE,
+    id
+  }
+}
+
+export function deleteMessage({id}) {
+  return {
+    type: DELETE_MESSAGE,
     id
   }
 }

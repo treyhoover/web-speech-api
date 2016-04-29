@@ -46,6 +46,13 @@ class Conversation extends Component {
     onVoiceChange(id, voiceId);
   }
 
+  _onDelete(id) {
+    return () => {
+      const {onDelete} = this.props;
+      onDelete(id);
+    }
+  }
+
   render() {
     const {messages = [], voices, playback} = this.props;
     return (
@@ -70,7 +77,7 @@ class Conversation extends Component {
                                       pitch={pitch} onPitchChange={::this._onPitchChange}/>
                 </CardText>
                 <CardActions expandable={true}>
-                  <FlatButton label="Delete"/>
+                  <FlatButton onClick={::this._onDelete(id)} label="Delete"/>
                 </CardActions>
               </Card>
             </li>
