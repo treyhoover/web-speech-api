@@ -46,10 +46,15 @@ export function setMessageRate(messageId, rate) {
   };
 }
 
-export function createMessage({id}) {
+export function createMessage({id, author, text, voiceId, rate, pitch}) {
   return {
     type: CREATE_MESSAGE,
-    id
+    id,
+    author,
+    text,
+    voiceId,
+    rate,
+    pitch
   }
 }
 
