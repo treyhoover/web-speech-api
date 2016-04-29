@@ -31,6 +31,13 @@ class Conversation extends Component {
     }
   }
 
+  _onAuthorChange(id) {
+    return (e) => {
+      const {onAuthorChange} = this.props;
+      onAuthorChange(id, e.target.value);
+    }
+  }
+
   _onPitchChange(id, newPitch) {
     const {onPitchChange} = this.props;
     onPitchChange(id, newPitch);
@@ -63,7 +70,8 @@ class Conversation extends Component {
             <li key={id}>
               <Card style={{marginBottom: '15px'}}>
                 <CardHeader style={{height: 'auto'}}
-                            title={author}
+                            title={<textarea style={{...textStyle, height: '20px'}} value={author} placeholder="Say something"
+                            onChange={::this._onAuthorChange(id)}/>}
                             actAsExpander={true}
                             showExpandableButton={true}
                 />
@@ -76,8 +84,9 @@ class Conversation extends Component {
                                       rate={rate} onRateChange={::this._onRateChange}
                                       pitch={pitch} onPitchChange={::this._onPitchChange}/>
                 </CardText>
-                <CardActions expandable={true}>
+                <CardActions expandable={false}>
                   <FlatButton onClick={::this._onDelete(id)} label="Delete"/>
+                  {/*<FlatButton onClick={} label="Duplicate"/>*/}
                 </CardActions>
               </Card>
             </li>

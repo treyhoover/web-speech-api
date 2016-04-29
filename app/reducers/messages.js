@@ -1,6 +1,7 @@
 import {
   SET_MESSAGE_VOICE,
   SET_MESSAGE_TEXT,
+  SET_MESSAGE_AUTHOR,
   SET_MESSAGE_RATE,
   SET_MESSAGE_PITCH,
   CREATE_MESSAGE,
@@ -46,6 +47,9 @@ export default function messages(state = _messages, action) {
     case SET_MESSAGE_RATE:
       return updateMessageValue(state, 'rate', action);
     case SET_MESSAGE_PITCH:
+      return updateMessageValue(state, 'rate', action);
+    case SET_MESSAGE_AUTHOR:
+      return updateMessageValue(state, 'author', action);
     case CREATE_MESSAGE:
       return state.concat({
         id: action.id,

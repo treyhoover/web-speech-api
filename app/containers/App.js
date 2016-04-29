@@ -8,7 +8,7 @@ import Conversation from 'components/Conversation';
 import {receiveVoices} from 'actions/voices';
 import {
   setMessageText, setMessagePitch, setMessageRate,
-  setMessageVoice, createMessage, deleteMessage
+  setMessageVoice, createMessage, deleteMessage, setMessageAuthor
 } from 'actions/messages';
 import {startPlayback, stopPlayback, setCurrentlyPlaying} from 'actions/playback';
 
@@ -77,6 +77,11 @@ class App extends Component {
     dispatch(setMessageText(id, text));
   }
 
+  onAuthorChange(id, author) {
+    const {dispatch} = this.props;
+    dispatch(setMessageAuthor(id, author));
+  }
+
   onVoiceChange(id, voice) {
     const {dispatch} = this.props;
     dispatch(setMessageVoice(id, voice));
@@ -117,6 +122,7 @@ class App extends Component {
                         voices={voices}
                         playback={playback}
                         onTextChange={::this.onTextChange}
+                        onAuthorChange={::this.onAuthorChange}
                         onVoiceChange={::this.onVoiceChange}
                         onPitchChange={::this.onPitchChange}
                         onRateChange={::this.onRateChange}
