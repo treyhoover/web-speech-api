@@ -1,10 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
 
 import Navbar from 'components/Navbar';
-import PlaybackControls from 'containers/PlaybackControls';
-import Conversation from 'containers/Conversation';
-import {populateVoices} from 'actions/voices';
+import PlaybackControls from 'components/PlaybackControls';
+import Conversation from 'components/Conversation';
+import {receiveVoices} from 'actions/voices';
+import {startPlayback, stopPlayback, setCurrentlyPlaying} from 'actions/playback';
 
 class App extends Component {
   constructor(props) {
@@ -13,16 +15,59 @@ class App extends Component {
 
   componentDidMount() {
     const {dispatch} = this.props;
-    dispatch(populateVoices());
+    speechSynthesis.onvoiceschanged = function () {
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        dispatch(receiveVoices());
+        speechSynthesis.onvoiceschanged = undefined;
+      }
+    }
+  }
+
+  play(message, callback) {
+    const {voices} = this.props;
+    const utterance = new SpeechSynthesisUtterance(message.text);
+    Object.assign(utterance, {
+      voice: voices[message.voiceId],
+      pitch: message.pitch,
+      rate: message.rate,
+      onend: callback
+    });
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  onPlay() {
+    const {dispatch, messages} = this.props;
+    dispatch(startPlayback());
+    dispatch(setCurrentlyPlaying(messages[0]));
+
+    for (let i in messages) {
+      const isLastMessage = i == (messages.length - 1);
+
+      this.play(messages[i], function (e) {
+        if (isLastMessage) dispatch(stopPlayback());
+      });
+    }
+  }
+
+  onStop() {
+    const {dispatch} = this.props;
+    dispatch(stopPlayback());
+    dispatch(setCurrentlyPlaying(null));
   }
 
   render() {
+    const {playback, messages, voices} = this.props;
     return (
       <div>
         <Navbar />
         <div className="container app-container">
-          <PlaybackControls />
-          <Conversation />
+          <PlaybackControls isPlaying={playback.isPlaying}
+                            voices={voices}
+                            onPlay={::this.onPlay}
+                            onStop={::this.onStop}
+          />
+          <Conversation messages={messages} />
         </div>
       </div>
     );
@@ -30,7 +75,13 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return {}
+  const {playback, messages, voices} = state;
+
+  return {
+    playback,
+    messages,
+    voices
+  }
 }
 
 export default connect(mapStateToProps)(App)

@@ -1,22 +1,10 @@
 export const RECEIVE_VOICES = 'RECEIVE_VOICES';
 
-function _receiveVoices() {
+export function receiveVoices() {
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
-  return (dispatch) => {
-    dispatch({
-      type: RECEIVE_VOICES,
-      voices
-    });
-  };
-}
-
-export function populateVoices() {
-  return (dispatch) => {
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = function () {
-        dispatch(_receiveVoices());
-      };
-    }
+  return {
+    type: RECEIVE_VOICES,
+    voices
   };
 }

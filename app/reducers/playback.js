@@ -1,6 +1,7 @@
 import {
   START_PLAYBACK,
   STOP_PLAYBACK,
+  SET_CURRENTLY_PLAYING
 } from 'actions/playback';
 
 export default function playback(state = {
@@ -16,6 +17,11 @@ export default function playback(state = {
       return Object.assign({}, state, {
         ...state,
         isPlaying: false
+      });
+    case SET_CURRENTLY_PLAYING:
+      return Object.assign({}, state, {
+        ...state,
+        currentlyPlaying: action.currentlyPlaying
       });
     default:
       return state;

@@ -5,7 +5,6 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
 import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
-import Divider from 'material-ui/lib/divider';
 
 import SpokenTextControls from 'containers/SpokenTextControls';
 import styles from './../app.css';
@@ -58,11 +57,4 @@ class Conversation extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const {messages = []} = state;
-  return {
-    messages
-  }
-}
-
-export default connect(mapStateToProps)(Conversation)
+export default Conversation;
