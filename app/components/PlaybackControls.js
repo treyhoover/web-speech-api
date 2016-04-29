@@ -15,7 +15,7 @@ class PlaybackControls extends Component {
     const {isPlaying} = this.props;
     return (
       <div>
-        <RaisedButton label={isPlaying ? 'Pause' : 'Play'} secondary={true} onClick={::this.togglePlaying}/>
+        <RaisedButton label={isPlaying ? 'Stop' : 'Play'} secondary={true} onClick={::this.togglePlaying}/>
       </div>
     );
   }

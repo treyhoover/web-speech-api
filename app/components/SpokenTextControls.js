@@ -1,10 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux'
 import SelectField from 'material-ui/lib/select-field';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Slider from 'material-ui/lib/slider';
-
-import {setMessageVoice} from 'actions/messages';
 
 import styles from './../app.css';
 
@@ -21,22 +18,24 @@ const sliderStyles = {
 
 class SpokenTextControls extends Component {
   changeVoice(e, idx, voiceId) {
-    const {id, dispatch} = this.props;
-    dispatch(setMessageVoice(id, voiceId));
+    const {id, onVoiceChange} = this.props;
+    onVoiceChange(id, voiceId);
   }
 
   changeRate(e, newRate) {
-    const {id} = this.props;
-    console.log(id, 'changing rate', newRate);
+    console.log('changed', newRate);
+    const {id, onRateChange} = this.props;
+    onRateChange(id, newRate);
   }
 
   changePitch(e, newPitch) {
-    const {id} = this.props;
-    console.log(id, 'changing pitch', newPitch);
+    console.log('changed', newPitch);
+    const {id, onPitchChange} = this.props;
+    onPitchChange(id, newPitch);
   }
 
   render() {
-    const {id, rate, pitch, voices = [], voiceId = 1} = this.props;
+    const {id, rate, pitch, voices = [], voiceId = 1, settingsDisabled} = this.props;
 
     return (
       <div>
@@ -60,7 +59,8 @@ class SpokenTextControls extends Component {
             name='rate'
             min={0.5}
             max={2}
-            defaultValue={1}
+            value={rate}
+            disabled={settingsDisabled}
             onChange={::this.changeRate}
           />
         </div>
@@ -73,7 +73,8 @@ class SpokenTextControls extends Component {
             name="pitch"
             min={0}
             max={2}
-            defaultValue={1}
+            value={pitch}
+            disabled={settingsDisabled}
             onChange={::this.changePitch}
           />
         </div>
@@ -82,11 +83,4 @@ class SpokenTextControls extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const {voices = []} = state;
-  return {
-    voices
-  }
-}
-
-export default connect(mapStateToProps)(SpokenTextControls)
+export default SpokenTextControls;

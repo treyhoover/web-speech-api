@@ -6,7 +6,7 @@ import Navbar from 'components/Navbar';
 import PlaybackControls from 'components/PlaybackControls';
 import Conversation from 'components/Conversation';
 import {receiveVoices} from 'actions/voices';
-import {setMessageText} from 'actions/messages';
+import {setMessageText, setMessagePitch, setMessageRate, setMessageVoice} from 'actions/messages';
 import {startPlayback, stopPlayback, setCurrentlyPlaying} from 'actions/playback';
 
 class App extends Component {
@@ -24,40 +24,44 @@ class App extends Component {
     }
   }
 
-  play(message, index, callback) {
+  play(message, callback) {
     const {dispatch, voices} = this.props;
     const utterance = new SpeechSynthesisUtterance(message.text);
-
-    dispatch(setCurrentlyPlaying(message));
 
     Object.assign(utterance, {
       voice: voices[message.voiceId],
       pitch: message.pitch,
       rate: message.rate,
-      onend: () => callback(message, index)
+      onend: () => callback(message)
     });
 
     window.speechSynthesis.speak(utterance);
   }
 
   onPlay() {
-    const {dispatch, messages} = this.props;
+    const {dispatch, messages, playback} = this.props;
+    if (playback.isPlaying || !messages.length) return;
+
     dispatch(startPlayback());
+    dispatch(setCurrentlyPlaying(messages[0]));
 
-    this.play(messages[0], 0, (function next(lastMessage, lastIndex) {
-      const nextIndex = lastIndex + 1;
-      const nextMessage = messages[nextIndex];
-
-      if (nextMessage) {
-        this.play(nextMessage, nextIndex, next);
-      } else {
-        dispatch(stopPlayback());
-      }
-    }).bind(this));
+    for (let i in messages) {
+      this.play(messages[i], message => {
+        if (i >= messages.length - 1) {
+          dispatch(stopPlayback())
+        } else {
+          dispatch(setCurrentlyPlaying(messages[i + 1]));
+        }
+      });
+    }
   }
 
   onStop() {
-    const {dispatch} = this.props;
+    const {dispatch, playback} = this.props;
+    if (!playback.isPlaying) return;
+
+    window.speechSynthesis.cancel();
+
     dispatch(stopPlayback());
     dispatch(setCurrentlyPlaying(null));
   }
@@ -65,6 +69,21 @@ class App extends Component {
   onTextChange(id, text) {
     const {dispatch} = this.props;
     dispatch(setMessageText(id, text));
+  }
+
+  onVoiceChange(id, voice) {
+    const {dispatch} = this.props;
+    dispatch(setMessageVoice(id, voice));
+  }
+
+  onRateChange(id, rate) {
+    const {dispatch} = this.props;
+    dispatch(setMessageRate(id, rate));
+  }
+
+  onPitchChange(id, pitch) {
+    const {dispatch} = this.props;
+    dispatch(setMessagePitch(id, pitch));
   }
 
   render() {
@@ -79,7 +98,12 @@ class App extends Component {
                             onStop={::this.onStop}
           />
           <Conversation messages={messages}
+                        voices={voices}
+                        playback={playback}
                         onTextChange={::this.onTextChange}
+                        onVoiceChange={::this.onVoiceChange}
+                        onPitchChange={::this.onPitchChange}
+                        onRateChange={::this.onRateChange}
           />
         </div>
       </div>

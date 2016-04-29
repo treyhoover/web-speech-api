@@ -6,7 +6,7 @@ import CardHeader from 'material-ui/lib/card/card-header';
 import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
 
-import SpokenTextControls from 'containers/SpokenTextControls';
+import SpokenTextControls from 'components/SpokenTextControls';
 import Theme from 'config/theme';
 import styles from './../app.css';
 
@@ -25,14 +25,29 @@ class Conversation extends Component {
   }
 
   _onTextChange(id) {
-    return e => {
+    return (e) => {
       const {onTextChange} = this.props;
       onTextChange(id, e.target.value);
     }
   }
 
+  _onPitchChange(id, newPitch) {
+    const {onPitchChange} = this.props;
+    onPitchChange(id, newPitch);
+  }
+
+  _onRateChange(id, newRate) {
+    const {onRateChange} = this.props;
+    onRateChange(id, newRate);
+  }
+
+  _onVoiceChange(id, voiceId) {
+    const {onVoiceChange} = this.props;
+    onVoiceChange(id, voiceId);
+  }
+
   render() {
-    const {messages = [], onTextChange} = this.props;
+    const {messages = [], voices, playback} = this.props;
     return (
       <ol className="conversation">
         {messages.map(message => {
@@ -41,15 +56,18 @@ class Conversation extends Component {
             <li key={id}>
               <Card style={{marginBottom: '15px'}}>
                 <CardHeader style={{height: 'auto'}}
-                  title={author}
-                  actAsExpander={true}
-                  showExpandableButton={true}
+                            title={author}
+                            actAsExpander={true}
+                            showExpandableButton={true}
                 />
                 <CardText expandable={false} style={{paddingTop: '0'}}>
                   <textarea style={textStyle} value={text} onChange={::this._onTextChange(id)}/>
                 </CardText>
-                <CardText expandable={true} style={{borderTop: '1px solid #eee'}} >
-                  <SpokenTextControls id={id} voiceId={voiceId} rate={rate} pitch={pitch}/>
+                <CardText expandable={true} style={{borderTop: '1px solid #eee'}}>
+                  <SpokenTextControls voices={voices} id={id} settingsDisabled={playback.isPlaying}
+                                      voiceId={voiceId} onVoiceChange={::this._onVoiceChange}
+                                      rate={rate} onRateChange={::this._onRateChange}
+                                      pitch={pitch} onPitchChange={::this._onPitchChange}/>
                 </CardText>
                 <CardActions expandable={true}>
                   <FlatButton label="Delete"/>
