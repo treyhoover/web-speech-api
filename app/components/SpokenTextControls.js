@@ -23,13 +23,11 @@ class SpokenTextControls extends Component {
   }
 
   changeRate(e, newRate) {
-    console.log('changed', newRate);
     const {id, onRateChange} = this.props;
     onRateChange(id, newRate);
   }
 
   changePitch(e, newPitch) {
-    console.log('changed', newPitch);
     const {id, onPitchChange} = this.props;
     onPitchChange(id, newPitch);
   }
@@ -71,7 +69,7 @@ class SpokenTextControls extends Component {
             className="pitch-slider"
             style={sliderStyles}
             name="pitch"
-            min={0}
+            min={0.1}
             max={2}
             value={pitch}
             disabled={settingsDisabled}

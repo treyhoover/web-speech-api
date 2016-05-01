@@ -47,7 +47,7 @@ export default function messages(state = _messages, action) {
     case SET_MESSAGE_RATE:
       return updateMessageValue(state, 'rate', action);
     case SET_MESSAGE_PITCH:
-      return updateMessageValue(state, 'rate', action);
+      return updateMessageValue(state, 'pitch', action);
     case SET_MESSAGE_AUTHOR:
       return updateMessageValue(state, 'author', action);
     case CREATE_MESSAGE:
