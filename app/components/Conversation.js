@@ -70,7 +70,7 @@ class Conversation extends Component {
             <li key={id}>
               <Card style={{marginBottom: '15px'}}>
                 <CardHeader style={{height: 'auto'}}
-                            title={<textarea style={{...textStyle, height: '20px'}} value={author} placeholder="Say something"
+                            title={<input style={{...textStyle, height: '20px'}} value={author} placeholder="Anonymous"
                             onChange={::this._onAuthorChange(id)}/>}
                             actAsExpander={true}
                             showExpandableButton={true}
