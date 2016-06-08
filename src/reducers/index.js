@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
-import {routerReducer} from 'react-router-redux';
-import voices from 'reducers/voices';
-import messages from 'reducers/messages';
-import playback from 'reducers/playback';
+import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+import voices from './voices';
+import messages from './messages';
+import playback from './playback';
 
 const app = combineReducers({
   routing: routerReducer,

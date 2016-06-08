@@ -18,4 +18,6 @@ html {
     padding-top: 25px;
 }
 
-:focus {outline: none;}
+:focus {
+    outline: none;
+}

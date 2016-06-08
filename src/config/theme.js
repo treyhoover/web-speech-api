@@ -2,9 +2,9 @@ import {
   cyan500, cyan700,
   grey100, grey300, grey400, grey500,
   pinkA200,
-  white, darkBlack, fullBlack,
+  white, darkBlack, fullBlack
 } from 'material-ui/styles/colors';
-import {fade} from 'material-ui/utils/colorManipulator';
+import { fade } from 'material-ui/utils/colorManipulator';
 
 const theme = {
   spacing: {

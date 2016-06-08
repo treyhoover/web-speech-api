@@ -1,8 +1,8 @@
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
-import rootReducer from 'reducers';
+import rootReducer from '../reducers';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
@@ -23,7 +23,7 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     module.hot.accept('reducers', () => {
-      const nextRootReducer = require('reducers').default;
+      const nextRootReducer = require('../reducers').default;
       store.replaceReducer(nextRootReducer);
     });
   }
