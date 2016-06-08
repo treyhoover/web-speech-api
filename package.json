@@ -5,7 +5,7 @@
   "main": "./server.js",
   "scripts": {
     "test": "",
-    "start": "node --harmony_destructuring server",
+    "start": "node server",
     "build": "rimraf dist && set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs ."
