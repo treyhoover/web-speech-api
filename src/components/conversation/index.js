@@ -1,14 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
-import Card from 'material-ui/lib/card/card';
-import CardActions from 'material-ui/lib/card/card-actions';
-import CardHeader from 'material-ui/lib/card/card-header';
-import FlatButton from 'material-ui/lib/flat-button';
-import CardText from 'material-ui/lib/card/card-text';
+import Card from 'material-ui/Card/card';
+import CardActions from 'material-ui/Card/CardActions';
+import CardHeader from 'material-ui/Card/CardHeader';
+import FlatButton from 'material-ui/FlatButton';
+import CardText from 'material-ui/Card/CardText';
 
-import SpokenTextControls from 'components/SpokenTextControls';
+import SpokenTextControls from 'components/spoken-text-controls';
 import Theme from 'config/theme';
-import styles from './../app.css';
+import styles from '../../app.css';
 
 const textStyle = {
   width: '100%',

@@ -2,9 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 
-import Navbar from 'components/Navbar';
-import PlaybackControls from 'components/PlaybackControls';
-import Conversation from 'components/Conversation';
+import Navbar from 'components/navbar';
+import PlaybackControls from 'components/playback-controls';
+import Conversation from 'components/conversation';
 import {receiveVoices} from 'actions/voices';
 import {
   setMessageText, setMessagePitch, setMessageRate,
@@ -12,10 +12,12 @@ import {
 } from 'actions/messages';
 import {startPlayback, stopPlayback, setCurrentlyPlaying} from 'actions/playback';
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
-class App extends Component {
+import App from 'components/app';
+
+class Root extends Component {
   constructor(props) {
     super(props);
   }
@@ -151,4 +153,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(Root)

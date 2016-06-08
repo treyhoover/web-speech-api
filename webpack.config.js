@@ -8,11 +8,11 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, 'app/index.js')
+    path.join(__dirname, 'src/index.js')
   ],
   resolve: {
     root: [
-      path.resolve('app'),
+      path.resolve('src'),
       path.resolve('shared')
     ]
   },
@@ -23,7 +23,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'app/index.tpl.html',
+      template: 'src/index.tpl.html',
       title: 'Speech Synthesizer',
       inject: 'body',
       filename: 'index.html'

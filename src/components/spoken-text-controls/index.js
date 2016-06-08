@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import SelectField from 'material-ui/lib/select-field';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import Slider from 'material-ui/lib/slider';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Slider from 'material-ui/slider';
 
-import styles from './../app.css';
+import styles from '../../app.css';
 
 const menuStyles = {
   whiteSpace: 'no-wrap',
