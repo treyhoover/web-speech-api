@@ -3,8 +3,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 
-import '../../app.css';
-
 const menuStyles = {
   whiteSpace: 'no-wrap',
   overflow: 'hidden',
