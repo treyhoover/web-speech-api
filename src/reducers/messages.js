@@ -6,18 +6,25 @@ import {
   SET_MESSAGE_PITCH,
   CREATE_MESSAGE,
   DELETE_MESSAGE
-} from 'actions/messages';
+} from '../actions/messages';
+import { reject } from 'lodash';
 
-import {setArrayIndexValue, removeArrayIndexValue} from 'reducers/helpers';
+import { setArrayIndexValue } from './helpers';
 
 const SET_VALUE = 'SET_VALUE';
 
 const _messages = [
-  {id: 1, voiceId: 66, rate: 1, pitch: 1, author: `Megan`, text: `Would you mind terribly putting the kettle on, I'm quite parched.`},
-  {id: 2, voiceId: 16, rate: 1, pitch: 1, author: `Trey`, text: `Oh dear, I'm afraid I simply can't be bothered.`}
+  {
+    id: 1, voiceId: 66, rate: 1, pitch: 1, author: 'Megan',
+    text: 'Would you mind terribly putting the kettle on, I\'m quite parched.'
+  },
+  {
+    id: 2, voiceId: 16, rate: 1, pitch: 1, author: 'Trey',
+    text: 'Oh dear, I\'m afraid I simply can\'t be bothered.'
+  }
 ];
 
-function message (state, action) {
+function message(state, action) {
   switch (action.type) {
     case SET_VALUE:
       return {
@@ -30,11 +37,9 @@ function message (state, action) {
 }
 
 export default function messages(state = _messages, action) {
-  let messageIndex, value;
-
-  function updateMessageValue(messages, key, action) {
-    messageIndex = messages.findIndex(message => message.id === action.messageId);
-    value = message(messages[messageIndex], {type: SET_VALUE, key: key, value: action[key]});
+  function updateMessageValue(m, key, updateAction) {
+    const messageIndex = m.findIndex(msg => msg.id === updateAction.messageId);
+    const value = message(m[messageIndex], { type: SET_VALUE, key, value: updateAction[key] });
 
     return setArrayIndexValue(state, messageIndex, value);
   }
@@ -60,8 +65,7 @@ export default function messages(state = _messages, action) {
         text: ''
       });
     case DELETE_MESSAGE:
-      messageIndex = state.findIndex(message => message.id === action.id);
-      return removeArrayIndexValue(state, messageIndex);
+      return reject(state, m => m.id === action.id);
     default:
       return state;
   }

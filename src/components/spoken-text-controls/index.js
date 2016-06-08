@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
-import SelectField from 'material-ui/lib/select-field';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import Slider from 'material-ui/lib/slider';
+import React, { Component, PropTypes } from 'react';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import Slider from 'material-ui/Slider';
 
-import styles from './../app.css';
+import '../../app.css';
 
 const menuStyles = {
   whiteSpace: 'no-wrap',
@@ -18,34 +18,40 @@ const sliderStyles = {
 
 class SpokenTextControls extends Component {
   changeVoice(e, idx, voiceId) {
-    const {id, onVoiceChange} = this.props;
+    const { id, onVoiceChange } = this.props;
     onVoiceChange(id, voiceId);
   }
 
   changeRate(e, newRate) {
-    const {id, onRateChange} = this.props;
+    const { id, onRateChange } = this.props;
     onRateChange(id, newRate);
   }
 
   changePitch(e, newPitch) {
-    const {id, onPitchChange} = this.props;
+    const { id, onPitchChange } = this.props;
     onPitchChange(id, newPitch);
   }
 
   render() {
-    const {id, rate, pitch, voices = [], voiceId = 1, settingsDisabled} = this.props;
+    const { rate, pitch, voices = [], voiceId = 1, settingsDisabled } = this.props;
 
     return (
       <div>
         <label htmlFor="voice">Voice</label>
         <div>
-          <SelectField name="voice" value={voiceId} disabled={false} style={menuStyles}
-                       onChange={::this.changeVoice}>
-            {
-              voices.length ? voices.map((v, idx) => {
-                return <MenuItem key={idx} value={idx} primaryText={`${v.name} (${v.lang})`}/>
-              }) : null
-            }
+          <SelectField
+            name="voice"
+            value={voiceId}
+            disabled={false}
+            style={menuStyles}
+            onChange={::this.changeVoice}
+          >
+            {voices.length ? voices.map((v, idx) =>
+              <MenuItem
+                key={idx}
+                value={idx}
+                primaryText={`${v.name} (${v.lang})`}
+              />) : null}
           </SelectField>
         </div>
 
@@ -54,7 +60,7 @@ class SpokenTextControls extends Component {
           <Slider
             className="rate-slider"
             style={sliderStyles}
-            name='rate'
+            name="rate"
             min={0.5}
             max={2}
             value={rate}
@@ -80,5 +86,17 @@ class SpokenTextControls extends Component {
     );
   }
 }
+
+SpokenTextControls.propTypes = {
+  id: PropTypes.number.isRequired,
+  onVoiceChange: PropTypes.func.isRequired,
+  onRateChange: PropTypes.func.isRequired,
+  onPitchChange: PropTypes.func.isRequired,
+  rate: PropTypes.number.isRequired,
+  pitch: PropTypes.number.isRequired,
+  voices: PropTypes.array.isRequired,
+  voiceId: PropTypes.number.isRequired,
+  settingsDisabled: PropTypes.bool.isRequired
+};
 
 export default SpokenTextControls;

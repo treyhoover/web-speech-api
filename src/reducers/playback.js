@@ -2,7 +2,7 @@ import {
   START_PLAYBACK,
   STOP_PLAYBACK,
   SET_CURRENTLY_PLAYING
-} from 'actions/playback';
+} from '../actions/playback';
 
 export default function playback(state = {
   isPlaying: false
