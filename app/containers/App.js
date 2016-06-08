@@ -31,6 +31,8 @@ class App extends Component {
   }
 
   play(message, callback) {
+    if (!message.text || !message.text.length) return callback(message);
+
     const {dispatch, voices} = this.props;
     const utterance = new SpeechSynthesisUtterance(message.text);
 
@@ -51,15 +53,15 @@ class App extends Component {
     dispatch(startPlayback());
     dispatch(setCurrentlyPlaying(messages[0]));
 
-    for (let i in messages) {
-      this.play(messages[i], message => {
+    messages.forEach((message, i) => {
+      this.play(message, () => {
         if (i >= messages.length - 1) {
           dispatch(stopPlayback())
         } else {
           dispatch(setCurrentlyPlaying(messages[i + 1]));
         }
       });
-    }
+    });
   }
 
   onStop() {
