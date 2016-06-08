@@ -74,7 +74,6 @@ class Conversation extends Component {
                       onChange={::this._onAuthorChange(id)}
                     />
                   }
-                  actAsExpander
                   showExpandableButton
                 />
                 <CardText expandable={false} style={{ paddingTop: '0' }}>
