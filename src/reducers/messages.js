@@ -9,7 +9,8 @@ import {
   SET_MESSAGE_PITCH,
   CREATE_MESSAGE,
   DELETE_MESSAGE,
-  COPY_MESSAGE
+  COPY_MESSAGE,
+  REMOVE_ALL_MESSAGES
 } from '../actions/messages';
 
 import { loadState } from '../localstorage';
@@ -76,6 +77,8 @@ export default function messages(state = _messages, action) {
       return reject(state, m => m.id === action.id);
     case COPY_MESSAGE:
       return duplicated(state, action.id);
+    case REMOVE_ALL_MESSAGES:
+      return [];
     default:
       return state;
   }

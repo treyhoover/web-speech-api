@@ -8,6 +8,11 @@ export const SET_MESSAGE_AUTHOR = 'SET_MESSAGE_AUTHOR';
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const COPY_MESSAGE = 'COPY_MESSAGE';
+export const REMOVE_ALL_MESSAGES = 'REMOVE_ALL_MESSAGES';
+
+export const removeAllMessages = () => ({
+  type: REMOVE_ALL_MESSAGES
+});
 
 export const setMessageVoice = (id, voiceId) => ({
   type: SET_MESSAGE_VOICE,
