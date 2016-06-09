@@ -12,17 +12,24 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Theme from './config/theme';
 import Root from './containers/root';
 import configureStore from './store';
+import { saveState } from './localstorage';
 import './style.css';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 const muiTheme = getMuiTheme(Theme);
 
+store.subscribe(() => {
+  saveState({
+    messages: store.getState().messages
+  });
+});
+
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <Router history={history}>
-        <Route name="Home" path="/" component={Root} />
+        <Route name="Home" path="/" component={Root}/>
       </Router>
     </MuiThemeProvider>
   </Provider>,

@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Navbar from '../../components/navbar';
-import PlaybackControls from '../../components/playback-controls';
+import ConversationActions from '../../components/conversation-actions';
 import Conversation from '../../components/conversation';
 import { receiveVoices } from '../../actions/voices';
 import {
   setMessageText, setMessagePitch, setMessageRate,
-  setMessageVoice, createMessage, deleteMessage, setMessageAuthor, copyMessage
+  setMessageVoice, createMessage, deleteMessage, setMessageAuthor, copyMessage, removeAllMessages
 } from '../../actions/messages';
 import { startPlayback, stopPlayback, setCurrentlyPlaying } from '../../actions/playback';
 
@@ -51,6 +51,11 @@ class Root extends Component {
 
     dispatch(stopPlayback());
     dispatch(setCurrentlyPlaying(null));
+  }
+
+  onRemoveAll() {
+    const { dispatch } = this.props;
+    dispatch(removeAllMessages());
   }
 
   onTextChange(id, text) {
@@ -115,11 +120,12 @@ class Root extends Component {
       <div>
         <Navbar />
         <div className="container app-container">
-          <PlaybackControls
+          <ConversationActions
             isPlaying={playback.isPlaying}
             voices={voices}
             onPlay={::this.onPlay}
             onStop={::this.onStop}
+            onRemoveAll={::this.onRemoveAll}
           />
           <Conversation
             messages={messages}

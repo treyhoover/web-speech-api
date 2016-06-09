@@ -9,10 +9,15 @@ import {
   SET_MESSAGE_PITCH,
   CREATE_MESSAGE,
   DELETE_MESSAGE,
-  COPY_MESSAGE
+  COPY_MESSAGE,
+  REMOVE_ALL_MESSAGES
 } from '../actions/messages';
 
-const _messages = [
+import { loadState } from '../localstorage';
+
+const restoredState = loadState() || {};
+
+const _messages = restoredState.messages || [
   {
     id: uuid(), voiceId: 66, rate: 1, pitch: 1, author: 'Megan',
     text: 'Would you mind terribly putting the kettle on, I\'m quite parched.'
@@ -22,6 +27,8 @@ const _messages = [
     text: 'Oh dear, I\'m afraid I simply can\'t be bothered.'
   }
 ];
+
+
 
 function duplicated(state, id) {
   const idx = state.findIndex(message => message.id === id);
@@ -70,6 +77,8 @@ export default function messages(state = _messages, action) {
       return reject(state, m => m.id === action.id);
     case COPY_MESSAGE:
       return duplicated(state, action.id);
+    case REMOVE_ALL_MESSAGES:
+      return [];
     default:
       return state;
   }
