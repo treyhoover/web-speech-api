@@ -2,12 +2,27 @@ import React, { Component, PropTypes } from 'react';
 import Card from 'material-ui/Card/Card';
 import CardActions from 'material-ui/Card/CardActions';
 import CardHeader from 'material-ui/Card/CardHeader';
-import FlatButton from 'material-ui/FlatButton';
 import CardText from 'material-ui/Card/CardText';
+import Delete from 'material-ui/svg-icons/action/delete';
+import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
+import IconButton from 'material-ui/IconButton';
+import Divider from 'material-ui/Divider';
 
 import SpokenTextControls from '../../components/spoken-text-controls';
 import Theme from '../../config/theme';
 import '../../app.css';
+
+const iconStyle = {
+  width: 30,
+  height: 30,
+  fill: Theme.palette.primary1Color
+};
+
+const iconButtonStyle = {
+  width: 60,
+  height: 60,
+  padding: 15
+};
 
 const textStyle = {
   width: '100%',
@@ -23,6 +38,12 @@ class Conversation extends Component {
     return (e) => {
       const { onTextChange } = this.props;
       onTextChange(id, e.target.value);
+    };
+  }
+
+  _onCopy(id) {
+    return (e) => {
+      console.log('copying');
     };
   }
 
@@ -76,14 +97,15 @@ class Conversation extends Component {
                   }
                   showExpandableButton
                 />
-                <CardText expandable={false} style={{ paddingTop: '0' }}>
+                <CardText expandable={false} style={{ paddingTop: '0px' }}>
                   <textarea
                     style={textStyle} value={text}
                     placeholder="Say something"
                     onChange={::this._onTextChange(id)}
                   />
+                  <Divider />
                 </CardText>
-                <CardText expandable style={{ borderTop: '1px solid #eee' }}>
+                <CardText expandable>
                   <SpokenTextControls
                     voices={voices}
                     id={id}
@@ -95,10 +117,24 @@ class Conversation extends Component {
                     pitch={pitch}
                     onPitchChange={::this._onPitchChange}
                   />
+                  <Divider />
                 </CardText>
                 <CardActions expandable={false}>
-                  <FlatButton onClick={::this._onDelete(id)} label="Delete" />
-                  {/* <FlatButton onClick={} label="Duplicate"/>*/}
+                  <IconButton
+                    onClick={::this._onDelete(id)}
+                    iconStyle={iconStyle}
+                    style={iconButtonStyle}
+                  >
+                    <Delete />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={::this._onCopy(id)}
+                    iconStyle={iconStyle}
+                    style={iconButtonStyle}
+                  >
+                    <OpenInNew />
+                  </IconButton>
                 </CardActions>
               </Card>
             </li>
