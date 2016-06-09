@@ -7,7 +7,7 @@ import Conversation from '../../components/conversation';
 import { receiveVoices } from '../../actions/voices';
 import {
   setMessageText, setMessagePitch, setMessageRate,
-  setMessageVoice, createMessage, deleteMessage, setMessageAuthor
+  setMessageVoice, createMessage, deleteMessage, setMessageAuthor, copyMessage
 } from '../../actions/messages';
 import { startPlayback, stopPlayback, setCurrentlyPlaying } from '../../actions/playback';
 
@@ -83,6 +83,11 @@ class Root extends Component {
     dispatch(deleteMessage({ id }));
   }
 
+  onCopyMessage(id) {
+    const { dispatch } = this.props;
+    dispatch(copyMessage({ id }));
+  }
+
   play(message, callback) {
     if (!message.text || !message.text.length) return callback(message);
 
@@ -100,8 +105,8 @@ class Root extends Component {
   }
 
   createMessage() {
-    const { dispatch, messages } = this.props;
-    dispatch(createMessage({ id: messages.length + 1 }));
+    const { dispatch } = this.props;
+    dispatch(createMessage());
   }
 
   render() {
@@ -125,6 +130,7 @@ class Root extends Component {
             onVoiceChange={::this.onVoiceChange}
             onPitchChange={::this.onPitchChange}
             onRateChange={::this.onRateChange}
+            onCopyMessage={::this.onCopyMessage}
             onDelete={::this.onDelete}
           />
 

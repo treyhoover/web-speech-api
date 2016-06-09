@@ -86,7 +86,7 @@ class SpokenTextControls extends Component {
 }
 
 SpokenTextControls.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   onVoiceChange: PropTypes.func.isRequired,
   onRateChange: PropTypes.func.isRequired,
   onPitchChange: PropTypes.func.isRequired,

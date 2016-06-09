@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'node-uuid';
+
 export const SET_MESSAGE_VOICE = 'SET_MESSAGE_VOICE';
 export const SET_MESSAGE_TEXT = 'SET_MESSAGE_TEXT';
 export const SET_MESSAGE_PITCH = 'SET_MESSAGE_PITCH';
@@ -5,6 +7,7 @@ export const SET_MESSAGE_RATE = 'SET_MESSAGE_RATE';
 export const SET_MESSAGE_AUTHOR = 'SET_MESSAGE_AUTHOR';
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
+export const COPY_MESSAGE = 'COPY_MESSAGE';
 
 export const setMessageVoice = (messageId, voiceId) => ({
   type: SET_MESSAGE_VOICE,
@@ -39,17 +42,24 @@ export const setMessageRate = (messageId, rate) => ({
   rate
 });
 
-export const createMessage = ({ id, author, text, voiceId, rate, pitch }) => ({
-  type: CREATE_MESSAGE,
-  id,
-  author,
-  text,
-  voiceId,
-  rate,
-  pitch
-});
+export const createMessage = ({ author, text, voiceId, rate, pitch } = {}) => {
+  return {
+    type: CREATE_MESSAGE,
+    id: uuid(),
+    author,
+    text,
+    voiceId,
+    rate,
+    pitch
+  };
+};
 
 export const deleteMessage = ({ id }) => ({
   type: DELETE_MESSAGE,
+  id
+});
+
+export const copyMessage = ({ id }) => ({
+  type: COPY_MESSAGE,
   id
 });

@@ -43,7 +43,8 @@ class Conversation extends Component {
 
   _onCopy(id) {
     return (e) => {
-      console.log('copying');
+      const { onCopyMessage  } = this.props;
+      onCopyMessage (id);
     };
   }
 
@@ -148,6 +149,7 @@ class Conversation extends Component {
 Conversation.propTypes = {
   messages: PropTypes.array.isRequired,
   onVoiceChange: PropTypes.func.isRequired,
+  onCopyMessage: PropTypes.func.isRequired,
   onTextChange: PropTypes.func.isRequired,
   onRateChange: PropTypes.func.isRequired,
   onPitchChange: PropTypes.func.isRequired,

@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'node-uuid';
+
 import {
   SET_MESSAGE_VOICE,
   SET_MESSAGE_TEXT,
@@ -5,7 +7,8 @@ import {
   SET_MESSAGE_RATE,
   SET_MESSAGE_PITCH,
   CREATE_MESSAGE,
-  DELETE_MESSAGE
+  DELETE_MESSAGE,
+  COPY_MESSAGE
 } from '../actions/messages';
 import { reject } from 'lodash';
 
@@ -15,14 +18,26 @@ const SET_VALUE = 'SET_VALUE';
 
 const _messages = [
   {
-    id: 1, voiceId: 66, rate: 1, pitch: 1, author: 'Megan',
+    id: uuid(), voiceId: 66, rate: 1, pitch: 1, author: 'Megan',
     text: 'Would you mind terribly putting the kettle on, I\'m quite parched.'
   },
   {
-    id: 2, voiceId: 16, rate: 1, pitch: 1, author: 'Trey',
+    id: uuid(), voiceId: 16, rate: 1, pitch: 1, author: 'Trey',
     text: 'Oh dear, I\'m afraid I simply can\'t be bothered.'
   }
 ];
+
+function duplicated(state, id) {
+  const idx = state.findIndex(message => message.id === id);
+  const copy = Object.assign({}, state[idx], {id: uuid()});
+
+  return [
+    ...state.slice(0, idx),
+    state[idx],
+    copy,
+    ...state.slice(idx + 1, state.length)
+  ];
+}
 
 function message(state, action) {
   switch (action.type) {
@@ -66,6 +81,8 @@ export default function messages(state = _messages, action) {
       });
     case DELETE_MESSAGE:
       return reject(state, m => m.id === action.id);
+    case COPY_MESSAGE:
+      return duplicated(state, action.id);
     default:
       return state;
   }
