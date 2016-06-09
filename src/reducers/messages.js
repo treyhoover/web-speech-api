@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'node-uuid';
+import { reject } from 'lodash';
 
 import {
   SET_MESSAGE_VOICE,
@@ -10,11 +11,6 @@ import {
   DELETE_MESSAGE,
   COPY_MESSAGE
 } from '../actions/messages';
-import { reject } from 'lodash';
-
-import { setArrayIndexValue } from './helpers';
-
-const SET_VALUE = 'SET_VALUE';
 
 const _messages = [
   {
@@ -29,7 +25,7 @@ const _messages = [
 
 function duplicated(state, id) {
   const idx = state.findIndex(message => message.id === id);
-  const copy = Object.assign({}, state[idx], {id: uuid()});
+  const copy = Object.assign({}, state[idx], { id: uuid() });
 
   return [
     ...state.slice(0, idx),
@@ -39,37 +35,28 @@ function duplicated(state, id) {
   ];
 }
 
-function message(state, action) {
-  switch (action.type) {
-    case SET_VALUE:
-      return {
-        ...state,
-        [action.key]: action.value
-      };
-    default:
-      return state;
-  }
+function updated(state, id, transform) {
+  const idx = state.findIndex(message => message.id === id);
+
+  return [
+    ...state.slice(0, idx),
+    transform(state[idx]),
+    ...state.slice(idx + 1, state.length)
+  ];
 }
 
 export default function messages(state = _messages, action) {
-  function updateMessageValue(m, key, updateAction) {
-    const messageIndex = m.findIndex(msg => msg.id === updateAction.messageId);
-    const value = message(m[messageIndex], { type: SET_VALUE, key, value: updateAction[key] });
-
-    return setArrayIndexValue(state, messageIndex, value);
-  }
-
   switch (action.type) {
     case SET_MESSAGE_VOICE:
-      return updateMessageValue(state, 'voiceId', action);
+      return updated(state, action.id, m => ({ ...m, voiceId: action.voiceId }));
     case SET_MESSAGE_TEXT:
-      return updateMessageValue(state, 'text', action);
+      return updated(state, action.id, m => ({ ...m, text: action.text }));
     case SET_MESSAGE_RATE:
-      return updateMessageValue(state, 'rate', action);
+      return updated(state, action.id, m => ({ ...m, rate: action.rate }));
     case SET_MESSAGE_PITCH:
-      return updateMessageValue(state, 'pitch', action);
+      return updated(state, action.id, m => ({ ...m, pitch: action.pitch }));
     case SET_MESSAGE_AUTHOR:
-      return updateMessageValue(state, 'author', action);
+      return updated(state, action.id, m => ({ ...m, author: action.author }));
     case CREATE_MESSAGE:
       return state.concat({
         id: action.id,

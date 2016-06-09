@@ -9,36 +9,35 @@ export const CREATE_MESSAGE = 'CREATE_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const COPY_MESSAGE = 'COPY_MESSAGE';
 
-export const setMessageVoice = (messageId, voiceId) => ({
+export const setMessageVoice = (id, voiceId) => ({
   type: SET_MESSAGE_VOICE,
-  messageId,
+  id,
   voiceId
 });
 
-export const setMessageText = (messageId, text) => ({
+export const setMessageText = (id, text) => ({
   type: SET_MESSAGE_TEXT,
-  messageId,
+  id,
   text
 
 });
 
-export const setMessageAuthor = (messageId, author) => ({
+export const setMessageAuthor = (id, author) => ({
   type: SET_MESSAGE_AUTHOR,
-  messageId,
+  id,
   author
-
 });
 
-export const setMessagePitch = (messageId, pitch) => ({
+export const setMessagePitch = (id, pitch) => ({
   type: SET_MESSAGE_PITCH,
-  messageId,
+  id,
   pitch
 
 });
 
-export const setMessageRate = (messageId, rate) => ({
+export const setMessageRate = (id, rate) => ({
   type: SET_MESSAGE_RATE,
-  messageId,
+  id,
   rate
 });
 
