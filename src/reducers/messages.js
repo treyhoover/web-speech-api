@@ -67,11 +67,11 @@ export default function messages(state = _messages, action) {
     case CREATE_MESSAGE:
       return state.concat({
         id: action.id,
-        voiceId: 0,
-        rate: 1,
-        pitch: 1,
-        author: 'Anonymous',
-        text: ''
+        voiceId: action.voiceId,
+        rate: action.rate,
+        pitch: action.pitch,
+        author: action.author,
+        text: action.text
       });
     case DELETE_MESSAGE:
       return reject(state, m => m.id === action.id);

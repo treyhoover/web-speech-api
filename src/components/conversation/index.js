@@ -8,7 +8,7 @@ import OpenInNew from 'material-ui/svg-icons/action/open-in-new';
 import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
 
-import SpokenTextControls from '../../components/spoken-text-controls';
+import ConversationActions from '../../components/spoken-text-controls';
 import Theme from '../../config/theme';
 import '../../app.css';
 
@@ -107,7 +107,7 @@ class Conversation extends Component {
                   <Divider />
                 </CardText>
                 <CardText expandable>
-                  <SpokenTextControls
+                  <ConversationActions
                     voices={voices}
                     id={id}
                     settingsDisabled={playback.isPlaying}

@@ -46,17 +46,15 @@ export const setMessageRate = (id, rate) => ({
   rate
 });
 
-export const createMessage = ({ author, text, voiceId, rate, pitch } = {}) => {
-  return {
-    type: CREATE_MESSAGE,
-    id: uuid(),
-    author,
-    text,
-    voiceId,
-    rate,
-    pitch
-  };
-};
+export const createMessage = ({ author = 'Anonymous', text = '', voiceId = 0, rate = 1, pitch = 1 } = {}) => ({
+  type: CREATE_MESSAGE,
+  id: uuid(),
+  author,
+  text,
+  voiceId,
+  rate,
+  pitch
+});
 
 export const deleteMessage = ({ id }) => ({
   type: DELETE_MESSAGE,
