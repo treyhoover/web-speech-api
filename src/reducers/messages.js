@@ -12,7 +12,11 @@ import {
   COPY_MESSAGE
 } from '../actions/messages';
 
-const _messages = [
+import { loadState } from '../localstorage';
+
+const restoredState = loadState() || {};
+
+const _messages = restoredState.messages || [
   {
     id: uuid(), voiceId: 66, rate: 1, pitch: 1, author: 'Megan',
     text: 'Would you mind terribly putting the kettle on, I\'m quite parched.'
@@ -22,6 +26,8 @@ const _messages = [
     text: 'Oh dear, I\'m afraid I simply can\'t be bothered.'
   }
 ];
+
+
 
 function duplicated(state, id) {
   const idx = state.findIndex(message => message.id === id);
