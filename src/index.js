@@ -12,7 +12,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Theme from './config/theme';
 import Root from './containers/root';
 import configureStore from './store';
-import { saveState } from './localstorage';
+import { saveState } from './models/localstorage';
 import './style.css';
 
 const store = configureStore();

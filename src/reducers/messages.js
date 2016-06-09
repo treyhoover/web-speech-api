@@ -13,7 +13,7 @@ import {
   REMOVE_ALL_MESSAGES
 } from '../actions/messages';
 
-import { loadState } from '../localstorage';
+import { loadState } from '../models/localstorage';
 
 const restoredState = loadState() || {};
 
