@@ -16,8 +16,6 @@ const _messages = restoredState.messages || [
   }
 ];
 
-
-
 function duplicated(state, id) {
   const idx = state.findIndex(message => message.id === id);
   const copy = Object.assign({}, state[idx], { id: uuid() });

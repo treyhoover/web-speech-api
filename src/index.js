@@ -28,7 +28,7 @@ render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <Router history={history}>
-        <Route name="Home" path="/" component={App}/>
+        <Route name="Home" path="/" component={App} />
       </Router>
     </MuiThemeProvider>
   </Provider>,

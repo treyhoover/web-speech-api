@@ -51,6 +51,7 @@ Suggestions are welcomed.
     //allow "private" variable denotation via _var syntax
     "no-underscore-dangle": [0],
     //allow variable shadowing
-    "no-shadow": [0]
+    "no-shadow": [0],
+    "react/prefer-stateless-function": [0]
   }
 }

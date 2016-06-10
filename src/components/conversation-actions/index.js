@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { deleteAllMessages } from '../../actions/messages';
+
 class ConversationActions extends Component {
   togglePlaying() {
     const { isPlaying, onPlay, onStop } = this.props;
@@ -8,8 +10,8 @@ class ConversationActions extends Component {
   }
 
   removeAll() {
-    const { onRemoveAll } = this.props;
-    onRemoveAll();
+    const { dispatch } = this.props;
+    dispatch(deleteAllMessages());
   }
 
   render() {
@@ -28,7 +30,7 @@ ConversationActions.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   onPlay: PropTypes.func.isRequired,
   onStop: PropTypes.func.isRequired,
-  onRemoveAll: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 export default ConversationActions;

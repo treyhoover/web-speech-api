@@ -13,8 +13,8 @@ const actionTypes = {
     }
   },
   create: {
-    message: ({ id = uuid(), author = 'Anonymous', text = '', voiceId = 1, rate = 1, pitch = 1, type }) =>
-      ({ id, author, text, voiceId, rate, pitch, type })
+    message: ({ author = 'Anonymous', text = '', voiceId = 0, rate = 1, pitch = 1, type }) =>
+      ({ id: uuid(), author, text, voiceId, rate, pitch, type })
   },
   delete: {
     message: ({ id, type }) => ({ id, type }),

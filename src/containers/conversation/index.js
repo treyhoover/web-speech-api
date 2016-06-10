@@ -1,22 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Conversation from '../../components/conversation';
 
-class ConversationContainer extends Component {
-  render() {
-    const { playback, messages, voices, dispatch } = this.props;
-
-    return (
-      <Conversation
-        playback={playback}
-        messages={messages}
-        voices={voices}
-        dispatch={dispatch}
-      />
-    );
-  }
-}
+const ConversationContainer = (props) => (
+  <Conversation
+    playback={props.playback}
+    messages={props.messages}
+    voices={props.voices}
+    dispatch={props.dispatch}
+  />
+);
 
 ConversationContainer.propTypes = {
   playback: PropTypes.object.isRequired,
