@@ -119,7 +119,7 @@ class Root extends Component {
     return (
       <App>
         <div className="container app-container">
-          <Conversation/>
+          <Conversation />
 
           <FloatingActionButton
             style={{ position: 'fixed', right: '15px', bottom: '15px' }}

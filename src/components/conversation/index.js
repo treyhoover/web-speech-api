@@ -4,12 +4,8 @@ import Message from './message';
 import './style.css';
 
 class Conversation extends Component {
-  onChange(id, key, value) {
-    this.props.onChange({ id, key, value });
-  }
-
   render() {
-    const { messages = [], playback = {}, voices = [] } = this.props;
+    const { messages = [], playback = {}, voices = [], dispatch } = this.props;
 
     return (
       <div>
@@ -17,9 +13,9 @@ class Conversation extends Component {
           {messages.map(data => <Message
             key={data.id}
             data={data}
+            dispatch={dispatch}
             playback={playback}
             voices={voices}
-            onChange={::this.onChange}
           />)}
         </ul>
       </div>
@@ -29,9 +25,9 @@ class Conversation extends Component {
 
 Conversation.propTypes = {
   messages: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired,
   voices: PropTypes.array.isRequired,
-  playback: PropTypes.object.isRequired
+  playback: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default Conversation;
