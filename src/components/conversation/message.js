@@ -86,6 +86,7 @@ class Message extends Component {
           <CardActions expandable={false}>
             <IconButton
               onClick={() => dispatch(actions.deleteMessage({ id }))}
+              disabled={playback.isPlaying}
               iconStyle={iconStyle}
               style={iconButtonStyle}
             >
@@ -94,6 +95,7 @@ class Message extends Component {
 
             <IconButton
               onClick={() => dispatch(actions.copyMessage({ id }))}
+              disabled={playback.isPlaying}
               iconStyle={iconStyle}
               style={iconButtonStyle}
             >
