@@ -49,6 +49,9 @@ Suggestions are welcomed.
     "consistent-return": [0],
     "no-return-assign": [0],
     //allow "private" variable denotation via _var syntax
-    "no-underscore-dangle": [0]
+    "no-underscore-dangle": [0],
+    //allow variable shadowing
+    "no-shadow": [0],
+    "react/prefer-stateless-function": [0]
   }
 }
