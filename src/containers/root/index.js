@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Navbar from '../../components/navbar';
+import App from '../../components/app';
 import ConversationActions from '../../components/conversation-actions';
 import Conversation from '../../components/conversation';
 import { receiveVoices } from '../../actions/voices';
@@ -118,7 +118,7 @@ class Root extends Component {
     const { playback, messages, voices } = this.props;
     return (
       <div>
-        <Navbar />
+        <App />
         <div className="container app-container">
           <ConversationActions
             isPlaying={playback.isPlaying}

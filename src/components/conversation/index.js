@@ -10,7 +10,7 @@ import Divider from 'material-ui/Divider';
 
 import ConversationActions from '../../components/spoken-text-controls';
 import Theme from '../../config/theme';
-import '../../app.css';
+import './style.css';
 
 const iconStyle = {
   width: 30,
