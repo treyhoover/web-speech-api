@@ -10,7 +10,7 @@ const App = (props) => (
 );
 
 App.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node
 };
 
 export default App;

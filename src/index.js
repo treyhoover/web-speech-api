@@ -10,7 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Theme from './config/theme';
-import Root from './containers/root';
+import App from './containers/app';
 import configureStore from './store';
 import { saveState } from './models/localstorage';
 
@@ -28,7 +28,7 @@ render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <Router history={history}>
-        <Route name="Home" path="/" component={Root}/>
+        <Route name="Home" path="/" component={App}/>
       </Router>
     </MuiThemeProvider>
   </Provider>,

@@ -34,51 +34,17 @@ const textStyle = {
 };
 
 class Conversation extends Component {
-  _onTextChange(id) {
-    return (e) => {
-      const { onTextChange } = this.props;
-      onTextChange(id, e.target.value);
-    };
-  }
-
-  _onCopy(id) {
-    return (e) => {
-      const { onCopyMessage  } = this.props;
-      onCopyMessage (id);
-    };
-  }
-
-  _onAuthorChange(id) {
-    return (e) => {
-      const { onAuthorChange } = this.props;
-      onAuthorChange(id, e.target.value);
-    };
-  }
-
-  _onPitchChange(id, newPitch) {
-    const { onPitchChange } = this.props;
-    onPitchChange(id, newPitch);
-  }
-
-  _onRateChange(id, newRate) {
-    const { onRateChange } = this.props;
-    onRateChange(id, newRate);
-  }
-
-  _onVoiceChange(id, voiceId) {
-    const { onVoiceChange } = this.props;
-    onVoiceChange(id, voiceId);
-  }
-
-  _onDelete(id) {
-    return () => {
-      const { onDelete } = this.props;
-      onDelete(id);
-    };
-  }
-
   render() {
     const { messages = [], voices, playback } = this.props;
+    const {
+      onDelete,
+      onVoiceChange,
+      onRateChange,
+      onPitchChange,
+      onAuthorChange,
+      onCopyMessage,
+      onTextChange
+    } = this.props;
     return (
       <ol className="conversation">
         {messages.map(message => {
@@ -93,7 +59,7 @@ class Conversation extends Component {
                       style={{ ...textStyle, height: '20px' }}
                       value={author}
                       placeholder="Anonymous"
-                      onChange={::this._onAuthorChange(id)}
+                      onChange={e => onAuthorChange(id, e.target.value)}
                     />
                   }
                   showExpandableButton
@@ -102,7 +68,7 @@ class Conversation extends Component {
                   <textarea
                     style={textStyle} value={text}
                     placeholder="Say something"
-                    onChange={::this._onTextChange(id)}
+                    onChange={e => onTextChange(id, e.target.value)}
                   />
                   <Divider />
                 </CardText>
@@ -112,17 +78,17 @@ class Conversation extends Component {
                     id={id}
                     settingsDisabled={playback.isPlaying}
                     voiceId={voiceId}
-                    onVoiceChange={::this._onVoiceChange}
+                    onVoiceChange={() => onVoiceChange(id, voiceId)}
                     rate={rate}
-                    onRateChange={::this._onRateChange}
+                    onRateChange={onRateChange}
                     pitch={pitch}
-                    onPitchChange={::this._onPitchChange}
+                    onPitchChange={onPitchChange}
                   />
                   <Divider />
                 </CardText>
                 <CardActions expandable={false}>
                   <IconButton
-                    onClick={::this._onDelete(id)}
+                    onClick={() => onDelete(id)}
                     iconStyle={iconStyle}
                     style={iconButtonStyle}
                   >
@@ -130,7 +96,7 @@ class Conversation extends Component {
                   </IconButton>
 
                   <IconButton
-                    onClick={::this._onCopy(id)}
+                    onClick={() => onCopyMessage(id)}
                     iconStyle={iconStyle}
                     style={iconButtonStyle}
                   >

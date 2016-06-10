@@ -117,8 +117,7 @@ class Root extends Component {
   render() {
     const { playback, messages, voices } = this.props;
     return (
-      <div>
-        <App />
+      <App>
         <div className="container app-container">
           <ConversationActions
             isPlaying={playback.isPlaying}
@@ -148,7 +147,7 @@ class Root extends Component {
             <ContentAdd />
           </FloatingActionButton>
         </div>
-      </div>
+      </App>
     );
   }
 }
