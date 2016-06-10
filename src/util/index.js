@@ -17,3 +17,5 @@ export const buildActions = (actions = {}, action, str) => {
 
   return actions;
 };
+
+export const defaultAction = ({ type }) => ({ type });

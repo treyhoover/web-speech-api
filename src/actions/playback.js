@@ -1,15 +1,15 @@
-export const START_PLAYBACK = 'START_PLAYBACK';
-export const STOP_PLAYBACK = 'STOP_PLAYBACK';
-export const SET_CURRENTLY_PLAYING = 'SET_CURRENTLY_PLAYING';
+import { buildActions, defaultAction } from '../util';
 
-export function startPlayback() {
-  return { type: START_PLAYBACK };
-}
+const actionTypes = {
+  start: { playback: defaultAction },
+  stop: { playback: defaultAction },
+  set: {
+    currently: {
+      playing: ({ type, message }) => ({ type, message })
+    }
+  }
+};
 
-export function stopPlayback() {
-  return { type: STOP_PLAYBACK };
-}
+const actions = buildActions({}, actionTypes);
 
-export function setCurrentlyPlaying(message) {
-  return { type: SET_CURRENTLY_PLAYING, message };
-}
+module.exports = actions;
