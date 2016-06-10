@@ -16,18 +16,15 @@ const sliderStyles = {
 
 class SpokenTextControls extends Component {
   changeVoice(e, idx, voiceId) {
-    const { id, onVoiceChange } = this.props;
-    onVoiceChange(id, voiceId);
+    this.props.onVoiceChange(voiceId);
   }
 
   changeRate(e, newRate) {
-    const { id, onRateChange } = this.props;
-    onRateChange(id, newRate);
+    this.props.onRateChange(newRate);
   }
 
   changePitch(e, newPitch) {
-    const { id, onPitchChange } = this.props;
-    onPitchChange(id, newPitch);
+    this.props.onPitchChange(newPitch);
   }
 
   render() {
@@ -86,7 +83,6 @@ class SpokenTextControls extends Component {
 }
 
 SpokenTextControls.propTypes = {
-  id: PropTypes.string.isRequired,
   onVoiceChange: PropTypes.func.isRequired,
   onRateChange: PropTypes.func.isRequired,
   onPitchChange: PropTypes.func.isRequired,

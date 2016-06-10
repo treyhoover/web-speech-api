@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import App from '../../components/app';
 import ConversationActions from '../../components/conversation-actions';
-import Conversation from '../../components/conversation';
+// import Conversation from '../../components/conversation';
+import Conversation from '../conversation';
 import { receiveVoices } from '../../actions/voices';
 import {
   setMessageText, setMessagePitch, setMessageRate,
@@ -115,29 +116,10 @@ class Root extends Component {
   }
 
   render() {
-    const { playback, messages, voices } = this.props;
     return (
       <App>
         <div className="container app-container">
-          <ConversationActions
-            isPlaying={playback.isPlaying}
-            voices={voices}
-            onPlay={::this.onPlay}
-            onStop={::this.onStop}
-            onRemoveAll={::this.onRemoveAll}
-          />
-          <Conversation
-            messages={messages}
-            voices={voices}
-            playback={playback}
-            onTextChange={::this.onTextChange}
-            onAuthorChange={::this.onAuthorChange}
-            onVoiceChange={::this.onVoiceChange}
-            onPitchChange={::this.onPitchChange}
-            onRateChange={::this.onRateChange}
-            onCopyMessage={::this.onCopyMessage}
-            onDelete={::this.onDelete}
-          />
+          <Conversation/>
 
           <FloatingActionButton
             style={{ position: 'fixed', right: '15px', bottom: '15px' }}
