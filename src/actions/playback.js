@@ -1,13 +1,9 @@
 import { buildActions, defaultAction } from '../util';
 
 const actionTypes = {
-  start: { playback: defaultAction },
-  stop: { playback: defaultAction },
-  set: {
-    currently: {
-      playing: ({ type, message }) => ({ type, message })
-    }
-  }
+  startPlayback: defaultAction,
+  stopPlayback: defaultAction,
+  setCurrentlyPlaying: ({ type, message }) => ({ type, message })
 };
 
 const actions = buildActions({}, actionTypes);

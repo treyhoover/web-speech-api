@@ -1,16 +1,14 @@
 import { v4 as uuid } from 'node-uuid';
 
-import { buildActions } from '../util';
+import { buildActions, defaultAction } from '../util';
 
 const actionTypes = {
-  set: {
-    message: {
-      voice: ({ id, voiceId, type }) => ({ id, voiceId, type }),
-      text: ({ id, text, type }) => ({ id, text, type }),
-      pitch: ({ id, pitch, type }) => ({ id, pitch, type }),
-      rate: ({ id, rate, type }) => ({ id, rate, type }),
-      author: ({ id, author, type }) => ({ id, author, type })
-    }
+  setMessage: {
+    voice: ({ id, voiceId, type }) => ({ id, voiceId, type }),
+    text: ({ id, text, type }) => ({ id, text, type }),
+    pitch: ({ id, pitch, type }) => ({ id, pitch, type }),
+    rate: ({ id, rate, type }) => ({ id, rate, type }),
+    author: ({ id, author, type }) => ({ id, author, type })
   },
   create: {
     message: ({ author = 'Anonymous', text = '', voiceId = 0, rate = 1, pitch = 1, type }) =>
@@ -18,7 +16,7 @@ const actionTypes = {
   },
   delete: {
     message: ({ id, type }) => ({ id, type }),
-    all: { messages: ({ type }) => ({ type }) }
+    allMessages: defaultAction
   },
   copy: {
     message: ({ id, type }) => ({ id, type })

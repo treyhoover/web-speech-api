@@ -1,8 +1,8 @@
-import { camelCase } from 'lodash';
+import { snakeCase, camelCase } from 'lodash';
 
-export const buildActions = (actions = {}, action, str) => {
+export const buildActions = (actions = {}, action, str = '') => {
   Object.keys(action).forEach(key => {
-    const newStr = str ? `${str}_${key}`.toUpperCase() : key.toUpperCase();
+    const newStr = snakeCase(`${str} ${key}`).toUpperCase();
     const next = action[key];
     if (typeof next === 'function') {
       const type = newStr;
